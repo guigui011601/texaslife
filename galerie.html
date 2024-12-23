@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galerie - Texas Life RP</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            min-height: 100vh;
+            background-color: #fafafa;
+        }
+
+        /* Sidebar styles */
+        .sidebar {
+            width: 250px;
+            background-color: white;
+            min-height: 100vh;
+            border-right: 1px solid #e0e0e0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        .sidebar nav {
+            padding-top: 20px;
+        }
+
+        .logo {
+            padding: 15px;
+            text-align: center;
+        }
+
+        .logo img {
+            width: 100px;
+            height: auto;
+        }
+
+        .nav-link {
+            display: block;
+            padding: 10px 20px;
+            color: #666;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .nav-link:hover {
+            background-color: #f5f5f5;
+            color: #2b669f;
+        }
+
+        .nav-link.active {
+            color: #2b669f;
+            border-left: 3px solid #2b669f;
+            background-color: #f0f7ff;
+        }
+
+        /* Main content */
+        .main-content {
+            margin-left: 250px;
+            padding: 2rem;
+            width: calc(100% - 250px);
+        }
+
+        .section {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section h1 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #333;
+            font-size: 2.5rem;
+        }
+
+        /* Gallery Styles */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .gallery img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            cursor: pointer;
+            user-select: none; /* Empêche la sélection de l'image */
+        }
+
+        .gallery img:hover {
+            transform: scale(1.05);
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8); /* Black background with opacity */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            max-width: 95%; /* Agrandir l'image */
+            max-height: 95%; /* Agrandir l'image */
+            object-fit: contain; /* Maintien le ratio de l'image */
+            transition: transform 0.3s ease-in-out; /* Ajouter une transition pour l'agrandissement */
+        }
+
+        /* L'agrandissement de l'image dans le modal */
+        .modal.show .modal-content {
+            transform: scale(1.1); /* Agrandir légèrement l'image dans le modal */
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        #caption {
+            text-align: center;
+            padding: 10px 0;
+            color: #f1f1f1;
+            font-size: 1.2rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1rem;
+            background-color: #2b669f;
+            color: white;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            left: 0;
+        }
+
+        .divider {
+            height: 1px;
+            background-color: #e0e0e0;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="logo">
+            <img src="images/tested.png" alt="Texas Life RP Logo">
+        </div>
+        <nav>
+            <div class="nav-section">
+                <a href="index.html" class="nav-link">Accueil</a>
+                <a href="presentation.html" class="nav-link">Présentation</a>
+                <a href="Règlement.html" class="nav-link">Règlement</a>
+                <a href="Lore.html" class="nav-link">Lore</a>
+                <a href="Actualités.html" class="nav-link">Actualités</a>
+                <a href="galerie.html" class="nav-link active">Galerie</a>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="nav-section">
+                <a href="aide.html" class="nav-link ">Aide touche</a>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <section class="section">
+            <h1>Galerie Photos</h1>
+            <div class="gallery">
+                <img src="images/neige.jpg">
+                <img src="images/mine2.jpg">
+                <img src="images/Louna.jpg">
+                <img src="images/mine.jpg">
+                <img src="images/lim.jpg">
+                <img src="images/On top of the world.jpg">
+                <img src="images/straw.jpg">
+                <img src="images/val2.jpg">
+                <img src="images/val.jpg">
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal for enlarged image -->
+    <div id="imageModal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="modalImage">
+        <div id="caption"></div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Texas Life RP - Tous droits réservés</p>
+    </footer>
+
+    <!-- JavaScript for modal functionality -->
+    <script>
+        var modal = document.getElementById("imageModal");
+        var images = document.querySelectorAll('.gallery img');
+        var modalImg = document.getElementById("modalImage");
+        var captionText = document.getElementById("caption");
+
+        // Assurez-vous que le modal est masqué au démarrage
+        modal.style.display = "none";
+
+        images.forEach(function(image) {
+            image.addEventListener("click", function() {
+                modal.style.display = "flex"; // Affiche le modal en flex pour centrer
+                modalImg.src = image.src; // Met à jour l'image dans le modal
+                captionText.innerHTML = ""; // Retire la légende
+                modal.classList.add("show"); // Applique la classe pour agrandir l'image
+            });
+        });
+
+        var span = document.getElementsByClassName("close")[0];
+
+        span.onclick = function() {
+            modal.style.display = "none"; // Ferme le modal
+            modal.classList.remove("show"); // Retire la classe pour restaurer la taille normale
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none"; // Ferme le modal si on clique à l'extérieur
+                modal.classList.remove("show");
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actualités - Texas Life RP</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            min-height: 100vh;
+            background-color: #fff;
+        }
+
+        /* Sidebar styles */
+        .sidebar {
+            width: 250px;
+            background-color: white;
+            min-height: 100vh;
+            border-right: 1px solid #e0e0e0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        .sidebar nav {
+            padding-top: 20px;
+        }
+
+        .nav-section {
+            margin-bottom: 20px;
+        }
+
+        .logo {
+            padding: 15px;
+            text-align: center;
+        }
+
+        .logo img {
+            width: 100px;
+            height: auto;
+        }
+
+        .nav-link {
+            display: block;
+            padding: 10px 20px;
+            color: #666;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .nav-link:hover {
+            background-color: #f5f5f5;
+            color: #2b669f;
+        }
+
+        .nav-link.active {
+            color: #2b669f;
+            border-left: 3px solid #2b669f;
+            background-color: #f0f7ff;
+        }
+
+        /* Main content */
+        .main-content {
+            margin-left: 250px;
+            padding: 2rem;
+            width: calc(100% - 250px);
+            background-color: #fafafa;
+        }
+
+        .section {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section h1 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #333;
+            font-size: 2.5rem;
+        }
+
+        .news-item {
+            background-color: #fff;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .news-item h2 {
+            font-size: 1.8rem;
+            color: #2b669f;
+            margin-bottom: 0.5rem;
+        }
+
+        .news-item p {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        .news-date {
+            font-size: 0.9rem;
+            color: #888;
+            margin-top: 1rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1rem;
+            background-color: #2b669f;
+            color: white;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            left: 0;
+        }
+        .divider {
+            height: 1px;
+            background-color: #e0e0e0;
+            margin: 10px 0;
+        }
+
+    </style>
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="logo">
+            <img src="images/tested.png" alt="Texas Life RP Logo">
+        </div>
+        <nav>
+            <div class="nav-section">
+                <a href="index.html" class="nav-link">Accueil</a>
+                <a href="presentation.html" class="nav-link">Présentation</a>
+                <a href="Règlement.html" class="nav-link">Règlement</a>
+                <a href="Lore.html" class="nav-link">Lore</a>
+                <a href="Actualités.html" class="nav-link">Actualités</a>
+                <a href="galerie.html" class="nav-link">Galerie</a>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="nav-section">
+                <a href="aide.html" class="nav-link active">Aide touche</a>
+            </div>
+        </nav>
+    </aside>
+    <main class="main-content">
+        <section class="section">
+            <h1>Aide</h1>
+    
+            <div class="news-item">
+                <h2>À faire pour plus de simplicité</h2>
+                <p>Pour le confort de tous, nous vous conseillons de modifier un fichier afin d'éviter de devoir changer la langue de votre clavier. Voici la procédure à suivre :</p>
+                
+                <br><p><strong>Étapes à suivre :</strong></p>
+                <ol>
+                    <li>Rendez-vous sur votre bureau, là où se trouve RedM.</li>
+                    <li>Faites un clic droit sur l'icône de RedM.</li>
+                    <li>Cliquez sur "Ouvrir l'emplacement du fichier".</li>
+                    <li>Une fois dans le dossier, suivez ce chemin d'accès :
+                        <br><code>RedM Application Data > Citizen > Platform > Data > Control</code>
+                    </li>
+                    <li>Téléchargez le fichier nécessaire en cliquant ici : 
+                        <a href="https://cdn.discordapp.com/attachments/1088587088485691424/1319402409700888726/default.meta?ex=676a71ff&is=6769207f&hm=53fed2cbd321d2606196aef8d8bf69c4ced6940f3b0c1c1e754f70558e855970&" style="font-size: 32px">⬇️</a>
+                    </li>
+                    <li>Remplacez le fichier <code>default.meta</code> existant dans le dossier Control par le nouveau fichier.</li>
+                </ol>
+    
+                <br><p><strong>Résultat :</strong> Votre clavier sera maintenant configuré en français dans le jeu.</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Texas Life RP - Tous droits réservés</p>
+    </footer>
+</body>
+</html>

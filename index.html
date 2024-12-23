@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Texas Life RP</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            min-height: 100vh;
+            background-color: #fff;
+        }
+
+        /* Sidebar styles */
+        .sidebar {
+            width: 250px;
+            background-color: white;
+            min-height: 100vh;
+            border-right: 1px solid #e0e0e0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        .sidebar nav {
+            padding-top: 20px;
+        }
+
+        .nav-section {
+            margin-bottom: 20px;
+        }
+
+        .nav-link {
+            display: block;
+            padding: 10px 20px;
+            color: #666;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .nav-link:hover {
+            background-color: #f5f5f5;
+            color: #2b669f;
+        }
+
+        .nav-link.active {
+            color: #2b669f;
+            border-left: 3px solid #2b669f;
+            background-color: #f0f7ff;
+        }
+
+        .divider {
+            height: 1px;
+            background-color: #e0e0e0;
+            margin: 10px 0;
+        }
+
+        /* Main content styles */
+        .main-content {
+            margin-left: 250px;
+            width: calc(100% - 250px);
+        }
+
+        .hero {
+            position: relative;
+            height: 800px;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
+            url('images/750001bd09b2452ef0d01fab0965ff76.jpg') center/cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 2rem;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .hero p {
+            max-width: 800px;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            background-color: #2b669f;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #1e4b76;
+        }
+
+        .section {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .section h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+            color: #333;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 200px;
+            }
+            .main-content {
+                margin-left: 200px;
+                width: calc(100% - 200px);
+            }
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .section {
+                padding: 2rem 1rem;
+            }
+        }
+
+        .logo {
+    padding: 15px;
+    text-align: center;
+    background: transparent;
+}
+
+.logo img {
+    width: 100px; /* Logo plus petit */
+    height: auto;
+    margin: 0 auto;
+    display: block;
+}
+footer {
+            text-align: center;
+            padding: 1rem;
+            background-color: #2b669f;
+            color: white;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            left: 0;
+        }
+
+    </style>
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="logo">
+            <img src="images/tested.png" alt="Texas Life RP Logo">
+        </div>
+        <nav>
+            <div class="nav-section">
+                <a href="index.html" class="nav-link active">Accueil</a>
+                <a href="presentation.html" class="nav-link">Présentation</a>
+                <a href="Règlement.html" class="nav-link">Règlement</a>
+                <a href="Lore.html" class="nav-link">Lore</a>
+                <a href="Actualités.html" class="nav-link">Actualités</a>
+                <a href="galerie.html" class="nav-link">Galerie</a>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="nav-section">
+                <a href="aide.html" class="nav-link ">Aide touche</a>
+            </div>
+        </nav>
+    </aside>
+    <main class="main-content">
+        <section class="hero" id="accueil">
+            <h1>Rejoignez Texas Life RP</h1>
+            <p>Vivez une expérience immersive inédite sur Texas Life RP, où chaque moment est une aventure unique. Participez à des événements scénarisés et plongez dans un monde riche en histoires et en interactions.</p>
+            <a href="https://discord.com/invite/gmxZfz6S8R" class="btn" target="_blank">Rejoindre</a>
+        </section>
+
+        <section class="section" id="presentation">
+            <h2>À propos de Texas Life RP</h2>
+            <p>Texas Life RP est un serveur RedM RP qui plonge les joueurs dans l'année 1885, au cœur de l'ouest sauvage. Nous proposons une expérience immersive où chaque comté offre ses propres défis et opportunités.</p>
+            <p>Dans le comté d'Ambarino, les tensions liées à la colonisation se mêlent à l'exploration de la faune indigène. Le comté de New Hanover, quant à lui, est marqué par des inégalités économiques et des conflits entre éleveurs, tandis que Lemoyne se distingue comme un centre culturel en proie à la pauvreté et à la corruption. Les aventuriers trouveront leur bonheur à West Elizabeth, où les éleveurs doivent faire face à des voleurs de bétail. Enfin, New Austin, une zone chaotique, abrite une milice autoproclamée et un climat d'anarchie.</p>
+            <p>Chaque joueur a l'opportunité de construire sa propre légende au sein de ce monde en constante évolution, en interagissant avec d'autres joueurs et en participant à des événements scénarisés.</p>
+        </section>
+
+        <style>
+            .card-grid {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 2rem;
+                padding: 2rem;
+                max-width: 1200px;
+                margin: 0 auto;
+            }
+
+            .feature-card {
+                background: white;
+                border-radius: 8px;
+                overflow: hidden;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            }
+
+            .feature-card img {
+                width: 100%;
+                height: 200px;
+                object-fit: cover;
+            }
+
+            .feature-card .content {
+                padding: 1rem;
+            }
+
+            .feature-card h3 {
+                color: #333;
+                margin-bottom: 1rem;
+            }
+
+            .feature-card ul {
+                list-style: none;
+                padding-left: 1rem;
+            }
+
+            .feature-card li {
+                margin-bottom: 0.5rem;
+                position: relative;
+            }
+
+            .feature-card li::before {
+                content: "•";
+                position: absolute;
+                left: -1rem;
+                color: #2b669f;
+            }
+
+            @media (max-width: 1200px) {
+                .card-grid {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+            }
+
+            @media (max-width: 768px) {
+                .card-grid {
+                    grid-template-columns: 1fr;
+                }
+            }
+        </style>
+
+        <div class="card-grid">
+            <div class="feature-card">
+                <img src="images/mine.jpg" alt="Caractéristiques">
+                <div class="content">
+                    <h3>Les caractéristiques uniques</h3>
+                    <p>Notre serveur se distingue par un système économique qui implique un role play actif dans tous les secteurs. Avec des fonctionnalités exclusives comme un système de météo dynamique et une personnalisation avancée des personnages.</p>
+                </div>
+            </div>
+            <div class="feature-card">
+                <img src="images/val.jpg" alt="Événements">
+                <div class="content">
+                    <h3>Événements réguliers</h3>
+                    <p>Nous mettons en place divers événements pour engager notre communauté, notamment :</p>
+                    <ul>
+                        <li>Concours de tir avec des prix spéciaux y compris un vol en ballon limité</li>
+                        <li>Une zone de jeux où les joueurs peuvent échanger des ressources</li>
+                        <li>Réceptions festives avec animations, boissons et échanges</li>
+                        <li>Chasse au trésor avec des récompenses variées</li>
+                        <li>Fête de Noël avec concours de costumes</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <img src="images/Red-Dead-Redemption.jpg" alt="Monde vivant">
+                <div class="content">
+                    <h3>Un monde vivant</h3>
+                    <p>Nos événements dynamiques et scénarisés aident les joueurs à adapter leurs stratégies. Ce réalisme au gameplay et ces éléments immersifs incluent les joueurs dans une véritable histoire dynamique avec notre monde.</p>
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <img src="images/On top of the world.jpg" alt="Rejoignez-nous">
+                <div class="content">
+                    <h3>Rejoignez-nous</h3>
+                    <p>Notre serveur n'est bien plus qu'un simple serveur de jeu. Nous vous invitons à rejoindre notre aventure dans un monde où chaque décision compte. Inscrivez-vous aujourd'hui !</p>
+                </div>
+            </div>
+        </div>
+        <style>
+            .faq-section {
+                background: #f5f5f5;
+                padding: 4rem 0;
+            }
+
+            .faq-grid {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 2rem;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 2rem;
+            }
+
+            .faq-card {
+                background: white;
+                padding: 2rem;
+                border-radius: 8px;
+                text-align: center;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            }
+
+            .faq-card img {
+                width: 100px;
+                height: 100px;
+                margin-bottom: 1rem;
+                border-radius: 50%;
+            }
+
+            .team-section {
+                background: #f5f5f5;
+                padding: 4rem 0;
+            }
+
+            .team-content {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 0 2rem;
+            }
+
+            .team-list {
+                list-style: none;
+                margin-top: 2rem;
+            }
+
+            .team-list li {
+                margin-bottom: 1rem;
+                padding-left: 1.5rem;
+                position: relative;
+            }
+
+            .team-list li::before {
+                content: "•";
+                position: absolute;
+                left: 0;
+                color: #2b669f;
+            }
+        </style>
+        <section class="faq-section" id="faq">
+            <h2>FAQ - Questions fréquentes</h2>
+            <div class="faq-grid">
+                <div class="faq-card">
+                    <img src="images/pooint.png" alt="Question">
+                    <h3>Comment rejoindre Texas Life RP ?</h3>
+                    <br><p>Pour rejoindre notre serveur, il vous suffit de :</p>
+                    <ol>
+                        <br><p> Rejoindre notre serveur Discord</p>
+                        <br><p> Accepter le règlement</p>
+                    </ol>
+                    <br><a href="https://discord.com/invite/gmxZfz6S8R" class="btn" target="_blank">Rejoignez-nous</a>
+                </div>
+
+                <div class="faq-card">
+                    <img src="images/pngegg.png" alt="FAQ">
+                    <h3>Pré requis techniques</h3>
+                    <br><p>Notre serveur est optimisé pour les petites configurations, avec une connexion stable nécessaire.</p>
+
+                </div>
+
+                <div class="faq-card">
+                    <img src="images/point deux.png" alt="Support">
+                    <h3>Signaler un problème</h3>
+                    <br><p>Utilisez notre système de ticket Discord pour signaler tout problème In-Game.</p>
+                    <br><a href="https://discordapp.com/channels/1078316641194082354/1084194216558735531" class="btn" target="_blank">Aide</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="actualites">
+            <h2>Actualités</h2>
+            <div class="news-content">
+                <p>Nous sommes ravis de partager avec vous les dernières mises à jour concernant notre serveur Texas Life RP. Notre équipe se travaille d'arrache-pied pour améliorer l'expérience de jeu et vous offrir des fonctionnalités encore plus captivantes.</p>
+                
+                <p>Parmi nos récentes améliorations, nous avons notamment mis en place des systèmes économiques intégrés et restructuré les missions sociales et économiques de notre communauté.</p>
+                
+                <p>Nous avons également mis à jour le mapping de notre serveur pour des environnements encore plus immersifs.</p>
+
+                <br><center><a href="Actualités.html" class="btn">Actualités</a></center>
+
+            </div>
+        </section>
+
+        <section class="team-section" id="equipe">
+            <div class="team-content">
+                <h2>L'équipe de Texas Life RP</h2>
+                <br><p>Chez Texas Life RP, notre équipe est composée de passionnés dévoués qui font vivre cette aventure unique.</p>
+                <ul class="team-list">
+                    <li>Administrateurs : Ils supervisent le serveur et gèrent les mises à jour</li>
+                    <li>Modérateurs : Ils veillent au respect des règles et aident les joueurs</li>
+                    <li>Développeurs : Ils créent les scripts et fonctionnalités</li>
+                </ul>
+            </div>
+        </section>
+
+        <footer>
+            <p>© 2024 Texas Life RP - Tous droits réservés</p>
+        </footer>
+    </main>
+    <footer>
+        <p>&copy; 2024 Texas Life RP - Tous droits réservés</p>
+    </footer>
+</body>
+</html>
