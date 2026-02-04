@@ -233,37 +233,6 @@
             cursor: not-allowed;
             opacity: 0.5;
         }
-        
-        /* Instructions */
-        .instructions {
-            background: rgba(139, 69, 19, 0.1);
-            border: 2px dashed #8b4513;
-            padding: 20px;
-            margin-bottom: 30px;
-            border-radius: 5px;
-        }
-        
-        .instructions h3 {
-            color: #654321;
-            margin-bottom: 10px;
-        }
-        
-        .instructions code {
-            background: rgba(0,0,0,0.1);
-            padding: 2px 8px;
-            border-radius: 3px;
-            font-family: monospace;
-        }
-        
-        .instructions ol {
-            margin-left: 20px;
-            margin-top: 10px;
-        }
-        
-        .instructions li {
-            margin: 5px 0;
-            line-height: 1.6;
-        }
     </style>
 </head>
 <body>
@@ -273,11 +242,9 @@
             <h2>Registre des Recettes</h2>
         </div>
         
-
-        
         <div class="registre">
             <div class="registre-content">
-                <div class="registre-title">📖 LIVRE DE COMPTES 📖</div>
+                <div class="registre-title"> LIVRE DE COMPTES </div>
                 
                 <div class="stats-bar">
                     <div class="stat">
@@ -302,89 +269,59 @@
     </div>
     
     <script>
-        // ⚠️ CONFIGURATION : Remplace par l'ID de ton Google Sheet
-        // L'ID se trouve dans l'URL : https://docs.google.com/spreadsheets/d/ABC123XYZ/edit
-        // Copie juste la partie ABC123XYZ
         const SHEET_ID = '1zrqQ5iAxBM4x-wXYK4V7aiavcBylLdwai0M1rcAaX44';
-        const SHEET_NAME = 'Recettes'; // Nom de l'onglet
-        
-        // ⚠️ LIGNE DE DÉPART : Change ce chiffre si les données ne commencent pas au bon endroit
-        // Essaie 3, 4, 5 ou 6 jusqu'à ce que ça affiche toutes tes lignes correctement
-        const START_ROW_INDEX = 1; // Commence à tester avec 3
+        const SHEET_NAME = 'Recettes';
+        const START_ROW_INDEX = 1;
         
         let currentPage = 1;
         const rowsPerPage = 20;
         let allData = [];
         
-        // Fonction pour charger les données depuis Google Sheets
         async function loadData() {
             try {
-                // Utiliser l'API Google Visualization (pas de problème CORS)
                 const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${SHEET_NAME}`;
                 const response = await fetch(url);
                 const text = await response.text();
                 
-                // Parser la réponse JSON de Google (elle commence par google.visualization.Query.setResponse(...))
                 const json = JSON.parse(text.substring(47).slice(0, -2));
                 const rows = json.table.rows;
-                
-                console.log('Nombre total de lignes:', rows.length);
                 
                 allData = [];
                 let totalRecettes = 0;
                 
-                // Parser les données en utilisant START_ROW_INDEX configuré en haut
-                console.log('Nombre total de lignes:', rows.length);
-                console.log('Démarrage à l\'index:', START_ROW_INDEX);
-                
                 for (let i = START_ROW_INDEX; i < rows.length; i++) {
                     const cells = rows[i].c;
-                    
-                    // Ignorer les lignes vides
                     if (!cells) continue;
                     
                     const getValue = (cell) => {
                         if (!cell) return '';
-                        if (cell.v !== null && cell.v !== undefined) {
-                            return String(cell.v);
-                        }
-                        if (cell.f) return cell.f; // Formule
+                        if (cell.v !== null && cell.v !== undefined) return String(cell.v);
+                        if (cell.f) return cell.f;
                         return '';
                     };
                     
                     const getDate = (cell) => {
                         if (!cell || !cell.v) return '';
                         
-                        // Si c'est déjà une string de date formatée
-                        if (typeof cell.v === 'string') {
-                            return cell.v;
+                        const cellValue = String(cell.v);
+                        if (!cellValue.startsWith('Date(')) {
+                            return cellValue;
                         }
                         
-                        // Si c'est un objet Date de Google Sheets format : Date(2026,1,4,15,13,52)
-                        const dateStr = String(cell.v);
-                        if (dateStr.startsWith('Date(')) {
-                            // Parser : Date(year, month, day, hour, min, sec)
-                            const match = dateStr.match(/Date\((\d+),(\d+),(\d+)(?:,(\d+),(\d+),(\d+))?\)/);
-                            if (match) {
-                                const year = match[1];
-                                const month = String(parseInt(match[2]) + 1).padStart(2, '0'); // Les mois commencent à 0
-                                const day = String(match[3]).padStart(2, '0');
-                                const hour = match[4] ? String(match[4]).padStart(2, '0') : '00';
-                                const min = match[5] ? String(match[5]).padStart(2, '0') : '00';
-                                return `${day}/${month}/${year} ${hour}:${min}`;
-                            }
+                        // Parser Date(2026,1,4,15,45,9)
+                        const match = cellValue.match(/Date\((\d+),(\d+),(\d+)(?:,(\d+),(\d+),(\d+))?\)/);
+                        if (match) {
+                            const year = match[1];
+                            const month = String(parseInt(match[2]) + 1).padStart(2, '0');
+                            const day = String(match[3]).padStart(2, '0');
+                            const hour = match[4] ? String(match[4]).padStart(2, '0') : '00';
+                            const min = match[5] ? String(match[5]).padStart(2, '0') : '00';
+                            return `${day}/${month}/${year} ${hour}:${min}`;
                         }
                         
-                        // Si c'est un timestamp
-                        if (cell.f && cell.f.includes('new Date')) {
-                            const date = new Date(cell.v);
-                            return date.toLocaleDateString('fr-FR') + ' ' + date.toLocaleTimeString('fr-FR', {hour: '2-digit', minute: '2-digit'});
-                        }
-                        
-                        return dateStr;
+                        return cellValue;
                     };
                     
-                    // Colonnes : A=Date, B=Description, C=Prix Unit, D=Quantité, E=Montant, F=Catégorie, G=Employé
                     const date = getDate(cells[0]);
                     const description = getValue(cells[1]);
                     const prixUnit = parseFloat(getValue(cells[2])) || 0;
@@ -393,20 +330,14 @@
                     const categorie = getValue(cells[5]);
                     const employe = getValue(cells[6]);
                     
-                    // Recalculer le montant si c'était une formule ou si vide
                     if (montant === 0 && prixUnit > 0 && quantite > 0) {
                         montant = prixUnit * quantite;
                     }
                     
-                    // Ajouter seulement si la ligne a du contenu significatif
-                    // (au moins une date OU une description)
                     if (date && date.trim() !== '' || description && description.trim() !== '') {
-                        console.log('Ligne', i, ':', {date, description, prixUnit, quantite, montant});
                         allData.push({
                             date: date,
                             description: description,
-                            prixUnit: prixUnit,
-                            quantite: quantite,
                             montant: montant,
                             categorie: categorie,
                             employe: employe
@@ -415,14 +346,10 @@
                     }
                 }
                 
-                console.log('Données chargées:', allData.length, 'lignes');
-                
-                // Mettre à jour les stats
                 document.getElementById('totalRecettes').textContent = `$${totalRecettes.toFixed(2)}`;
                 document.getElementById('nbTransactions').textContent = allData.length;
                 document.getElementById('lastUpdate').textContent = new Date().toLocaleTimeString('fr-FR');
                 
-                // Afficher les données
                 displayPage(1);
                 
             } catch (error) {
@@ -430,17 +357,12 @@
                 document.getElementById('content').innerHTML = `
                     <div class="error">
                         ❌ Erreur de chargement<br><br>
-                        ${error.message}<br><br>
-                        <strong>Vérifications :</strong><br>
-                        1. As-tu bien remplacé <code>TON_ID_GOOGLE_SHEET_ICI</code> par l'ID de ton Sheet ?<br>
-                        2. Ton Sheet est-il partagé en "Tous les utilisateurs disposant du lien" ?<br>
-                        3. L'onglet s'appelle-t-il bien "Recettes" ?
+                        ${error.message}
                     </div>
                 `;
             }
         }
         
-        // Afficher une page de données
         function displayPage(page) {
             currentPage = page;
             const start = (page - 1) * rowsPerPage;
@@ -480,7 +402,6 @@
                 </div>
             `;
             
-            // Pagination
             const totalPages = Math.ceil(allData.length / rowsPerPage);
             if (totalPages > 1) {
                 html += `
@@ -501,10 +422,7 @@
             document.getElementById('content').innerHTML = html;
         }
         
-        // Charger les données au démarrage
         loadData();
-        
-        // Recharger toutes les 30 secondes
         setInterval(loadData, 30000);
     </script>
 </body>
