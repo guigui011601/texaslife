@@ -275,7 +275,7 @@
         
         <div class="registre">
             <div class="registre-content">
-                <div class="registre-title">📖 LIVRE DE COMPTES 📖</div>
+                <div class="registre-title"> LIVRE DE COMPTES 📖</div>
                 
                 <div class="stats-bar">
                     <div class="stat">
@@ -293,7 +293,7 @@
                 </div>
                 
                 <div id="content">
-                    <div class="loading">⏳ Chargement du registre...</div>
+                    <div class="loading"> Chargement du registre...</div>
                 </div>
             </div>
         </div>
@@ -329,10 +329,23 @@
                 
                 // Parser les données - On commence à la ligne 4 (index 3)
                 // Ligne 1 (index 0) = Titre
-                // Ligne 2 (index 1) = Vide
+                // Ligne 2 (index 1) = Vide  
                 // Ligne 3 (index 2) = En-têtes
                 // Ligne 4+ (index 3+) = Données
-                for (let i = 3; i < rows.length; i++) {
+                
+                // MAIS il semble qu'il y ait 2 lignes avant les en-têtes, donc on démarre à index 3
+                let startIndex = 3;
+                
+                // Vérifier si la ligne 3 contient des données ou des en-têtes
+                if (rows[3] && rows[3].c) {
+                    const firstCell = rows[3].c[0];
+                    if (firstCell && firstCell.v && String(firstCell.v).includes('Date')) {
+                        // C'est une ligne d'en-tête, on commence à 4
+                        startIndex = 4;
+                    }
+                }
+                
+                for (let i = startIndex; i < rows.length; i++) {
                     const cells = rows[i].c;
                     
                     // Ignorer les lignes vides
@@ -341,18 +354,46 @@
                     const getValue = (cell) => {
                         if (!cell) return '';
                         if (cell.v !== null && cell.v !== undefined) {
-                            // Si c'est une date, formater correctement
-                            if (cell.v && typeof cell.v === 'object' && cell.v.toDateString) {
-                                return cell.v.toLocaleDateString('fr-FR');
-                            }
                             return String(cell.v);
                         }
                         if (cell.f) return cell.f; // Formule
                         return '';
                     };
                     
+                    const getDate = (cell) => {
+                        if (!cell || !cell.v) return '';
+                        
+                        // Si c'est déjà une string de date formatée
+                        if (typeof cell.v === 'string') {
+                            return cell.v;
+                        }
+                        
+                        // Si c'est un objet Date de Google Sheets format : Date(2026,1,4,15,13,52)
+                        const dateStr = String(cell.v);
+                        if (dateStr.startsWith('Date(')) {
+                            // Parser : Date(year, month, day, hour, min, sec)
+                            const match = dateStr.match(/Date\((\d+),(\d+),(\d+)(?:,(\d+),(\d+),(\d+))?\)/);
+                            if (match) {
+                                const year = match[1];
+                                const month = String(parseInt(match[2]) + 1).padStart(2, '0'); // Les mois commencent à 0
+                                const day = String(match[3]).padStart(2, '0');
+                                const hour = match[4] ? String(match[4]).padStart(2, '0') : '00';
+                                const min = match[5] ? String(match[5]).padStart(2, '0') : '00';
+                                return `${day}/${month}/${year} ${hour}:${min}`;
+                            }
+                        }
+                        
+                        // Si c'est un timestamp
+                        if (cell.f && cell.f.includes('new Date')) {
+                            const date = new Date(cell.v);
+                            return date.toLocaleDateString('fr-FR') + ' ' + date.toLocaleTimeString('fr-FR', {hour: '2-digit', minute: '2-digit'});
+                        }
+                        
+                        return dateStr;
+                    };
+                    
                     // Colonnes : A=Date, B=Description, C=Prix Unit, D=Quantité, E=Montant, F=Catégorie, G=Employé
-                    const date = getValue(cells[0]);
+                    const date = getDate(cells[0]);
                     const description = getValue(cells[1]);
                     const prixUnit = parseFloat(getValue(cells[2])) || 0;
                     const quantite = parseInt(getValue(cells[3])) || 0;
@@ -421,8 +462,6 @@
                             <tr>
                                 <th> Date</th>
                                 <th> Description</th>
-                                <th> Prix Unit.</th>
-                                <th> Quantité</th>
                                 <th> Montant</th>
                                 <th> Catégorie</th>
                                 <th> Employé</th>
@@ -436,8 +475,6 @@
                     <tr>
                         <td>${row.date}</td>
                         <td>${row.description}</td>
-                        <td>$${row.prixUnit.toFixed(2)}</td>
-                        <td>${row.quantite}</td>
                         <td class="montant">$${row.montant.toFixed(2)}</td>
                         <td>${row.categorie}</td>
                         <td>${row.employe}</td>
