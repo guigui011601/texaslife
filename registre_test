@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registre - Armurerie de BlackWater</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Rye&family=Special+Elite&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #3d2817 0%, #5c4033 100%);
+            font-family: 'Special Elite', cursive;
+            padding: 20px;
+            min-height: 100vh;
+            color: #2c1810;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #d4a574;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .header h1 {
+            font-family: 'Rye', cursive;
+            font-size: 3em;
+            margin-bottom: 10px;
+            letter-spacing: 3px;
+        }
+        
+        .header h2 {
+            font-size: 1.5em;
+            font-weight: normal;
+            color: #c99b6a;
+        }
+        
+        .registre {
+            background: linear-gradient(to bottom, 
+                #f4e8d8 0%, 
+                #f0e4d0 50%, 
+                #e8dccc 100%);
+            border: 8px solid #8b4513;
+            border-radius: 8px;
+            box-shadow: 
+                0 10px 40px rgba(0,0,0,0.6),
+                inset 0 0 100px rgba(139, 69, 19, 0.1);
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Effet papier vieilli */
+        .registre::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(139, 69, 19, 0.03) 2px,
+                    rgba(139, 69, 19, 0.03) 4px
+                );
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        /* Taches d'encre aléatoires */
+        .registre::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(101, 67, 33, 0.1) 0%, transparent 10%),
+                radial-gradient(circle at 80% 70%, rgba(101, 67, 33, 0.08) 0%, transparent 15%),
+                radial-gradient(circle at 40% 80%, rgba(101, 67, 33, 0.05) 0%, transparent 12%);
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .registre-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .registre-title {
+            text-align: center;
+            font-family: 'Rye', cursive;
+            font-size: 2em;
+            color: #654321;
+            margin-bottom: 20px;
+            border-bottom: 3px double #8b4513;
+            padding-bottom: 15px;
+        }
+        
+        .stats-bar {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(139, 69, 19, 0.1);
+            border: 2px solid #8b4513;
+            border-radius: 5px;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-label {
+            font-size: 0.9em;
+            color: #654321;
+            margin-bottom: 5px;
+        }
+        
+        .stat-value {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #8b4513;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            margin-top: 20px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        thead {
+            background: linear-gradient(to bottom, #8b4513, #654321);
+            color: #f4e8d8;
+        }
+        
+        th {
+            padding: 15px 10px;
+            text-align: left;
+            font-family: 'Rye', cursive;
+            font-size: 1.1em;
+            border: 2px solid #654321;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+        
+        td {
+            padding: 12px 10px;
+            border: 1px solid #c9a66b;
+            background: rgba(255, 255, 255, 0.4);
+        }
+        
+        tbody tr:nth-child(odd) {
+            background: rgba(244, 232, 216, 0.5);
+        }
+        
+        tbody tr:hover {
+            background: rgba(212, 165, 116, 0.3);
+            transform: scale(1.01);
+            transition: all 0.2s;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 50px;
+            font-size: 1.5em;
+            color: #654321;
+        }
+        
+        .error {
+            text-align: center;
+            padding: 50px;
+            font-size: 1.2em;
+            color: #8b0000;
+            background: rgba(255, 200, 200, 0.5);
+            border: 2px solid #8b0000;
+            border-radius: 5px;
+        }
+        
+        /* Style pour les montants */
+        .montant {
+            font-weight: bold;
+            color: #2d5016;
+        }
+        
+        /* Pagination simple */
+        .pagination {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+        }
+        
+        .pagination button {
+            background: #8b4513;
+            color: #f4e8d8;
+            border: 3px solid #654321;
+            padding: 10px 20px;
+            margin: 0 10px;
+            font-family: 'Special Elite', cursive;
+            font-size: 1.1em;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+        
+        .pagination button:hover {
+            background: #654321;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .pagination button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+        
+        /* Instructions */
+        .instructions {
+            background: rgba(139, 69, 19, 0.1);
+            border: 2px dashed #8b4513;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 5px;
+        }
+        
+        .instructions h3 {
+            color: #654321;
+            margin-bottom: 10px;
+        }
+        
+        .instructions code {
+            background: rgba(0,0,0,0.1);
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+        
+        .instructions ol {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+        
+        .instructions li {
+            margin: 5px 0;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1> ARMURERIE DE BLACKWATER </h1>
+            <h2>Registre des Recettes</h2>
+        </div>
+        
+        <div class="registre">
+            <div class="registre-content">
+                <div class="registre-title">📖 LIVRE DE COMPTES 📖</div>
+                
+                <div class="stats-bar">
+                    <div class="stat">
+                        <div class="stat-label">Total Recettes</div>
+                        <div class="stat-value" id="totalRecettes">$0</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-label">Transactions</div>
+                        <div class="stat-value" id="nbTransactions">0</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-label">Dernière MAJ</div>
+                        <div class="stat-value" id="lastUpdate" style="font-size: 1.2em;">-</div>
+                    </div>
+                </div>
+                
+                <div id="content">
+                    <div class="loading">⏳ Chargement du registre...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // ⚠️ CONFIGURATION : Remplace par l'ID de ton Google Sheet
+        // L'ID se trouve dans l'URL : https://docs.google.com/spreadsheets/d/ABC123XYZ/edit
+        // Copie juste la partie ABC123XYZ
+        const SHEET_ID = '1zrqQ5iAxBM4x-wXYK4V7aiavcBylLdwai0M1rcAaX44';
+        const SHEET_NAME = 'Recettes'; // Nom de l'onglet
+        
+        let currentPage = 1;
+        const rowsPerPage = 20;
+        let allData = [];
+        
+        // Fonction pour charger les données depuis Google Sheets
+        async function loadData() {
+            try {
+                // Utiliser l'API Google Visualization (pas de problème CORS)
+                const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${SHEET_NAME}`;
+                const response = await fetch(url);
+                const text = await response.text();
+                
+                // Parser la réponse JSON de Google (elle commence par google.visualization.Query.setResponse(...))
+                const json = JSON.parse(text.substring(47).slice(0, -2));
+                const rows = json.table.rows;
+                
+                console.log('Nombre total de lignes:', rows.length);
+                
+                allData = [];
+                let totalRecettes = 0;
+                
+                // Parser les données - On commence à la ligne 4 (index 3)
+                // Ligne 1 (index 0) = Titre
+                // Ligne 2 (index 1) = Vide
+                // Ligne 3 (index 2) = En-têtes
+                // Ligne 4+ (index 3+) = Données
+                for (let i = 3; i < rows.length; i++) {
+                    const cells = rows[i].c;
+                    
+                    // Ignorer les lignes vides
+                    if (!cells) continue;
+                    
+                    const getValue = (cell) => {
+                        if (!cell) return '';
+                        if (cell.v !== null && cell.v !== undefined) {
+                            // Si c'est une date, formater correctement
+                            if (cell.v && typeof cell.v === 'object' && cell.v.toDateString) {
+                                return cell.v.toLocaleDateString('fr-FR');
+                            }
+                            return String(cell.v);
+                        }
+                        if (cell.f) return cell.f; // Formule
+                        return '';
+                    };
+                    
+                    // Colonnes : A=Date, B=Description, C=Prix Unit, D=Quantité, E=Montant, F=Catégorie, G=Employé
+                    const date = getValue(cells[0]);
+                    const description = getValue(cells[1]);
+                    const prixUnit = parseFloat(getValue(cells[2])) || 0;
+                    const quantite = parseInt(getValue(cells[3])) || 0;
+                    let montant = parseFloat(getValue(cells[4])) || 0;
+                    const categorie = getValue(cells[5]);
+                    const employe = getValue(cells[6]);
+                    
+                    // Recalculer le montant si c'était une formule ou si vide
+                    if (montant === 0 && prixUnit > 0 && quantite > 0) {
+                        montant = prixUnit * quantite;
+                    }
+                    
+                    // Ajouter seulement si la ligne a du contenu significatif
+                    // (au moins une date OU une description)
+                    if (date && date.trim() !== '' || description && description.trim() !== '') {
+                        console.log('Ligne', i, ':', {date, description, prixUnit, quantite, montant});
+                        allData.push({
+                            date: date,
+                            description: description,
+                            prixUnit: prixUnit,
+                            quantite: quantite,
+                            montant: montant,
+                            categorie: categorie,
+                            employe: employe
+                        });
+                        totalRecettes += montant;
+                    }
+                }
+                
+                console.log('Données chargées:', allData.length, 'lignes');
+                
+                // Mettre à jour les stats
+                document.getElementById('totalRecettes').textContent = `$${totalRecettes.toFixed(2)}`;
+                document.getElementById('nbTransactions').textContent = allData.length;
+                document.getElementById('lastUpdate').textContent = new Date().toLocaleTimeString('fr-FR');
+                
+                // Afficher les données
+                displayPage(1);
+                
+            } catch (error) {
+                console.error('Erreur:', error);
+                document.getElementById('content').innerHTML = `
+                    <div class="error">
+                        ❌ Erreur de chargement<br><br>
+                        ${error.message}<br><br>
+                        <strong>Vérifications :</strong><br>
+                        1. As-tu bien remplacé <code>TON_ID_GOOGLE_SHEET_ICI</code> par l'ID de ton Sheet ?<br>
+                        2. Ton Sheet est-il partagé en "Tous les utilisateurs disposant du lien" ?<br>
+                        3. L'onglet s'appelle-t-il bien "Recettes" ?
+                    </div>
+                `;
+            }
+        }
+        
+        // Afficher une page de données
+        function displayPage(page) {
+            currentPage = page;
+            const start = (page - 1) * rowsPerPage;
+            const end = start + rowsPerPage;
+            const pageData = allData.slice(start, end);
+            
+            let html = `
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>📅 Date</th>
+                                <th>📝 Description</th>
+                                <th>💵 Prix Unit.</th>
+                                <th>📦 Quantité</th>
+                                <th>💰 Montant</th>
+                                <th>🏷️ Catégorie</th>
+                                <th>👤 Employé</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+            `;
+            
+            pageData.forEach(row => {
+                html += `
+                    <tr>
+                        <td>${row.date}</td>
+                        <td>${row.description}</td>
+                        <td>$${row.prixUnit.toFixed(2)}</td>
+                        <td>${row.quantite}</td>
+                        <td class="montant">$${row.montant.toFixed(2)}</td>
+                        <td>${row.categorie}</td>
+                        <td>${row.employe}</td>
+                    </tr>
+                `;
+            });
+            
+            html += `
+                        </tbody>
+                    </table>
+                </div>
+            `;
+            
+            // Pagination
+            const totalPages = Math.ceil(allData.length / rowsPerPage);
+            if (totalPages > 1) {
+                html += `
+                    <div class="pagination">
+                        <button onclick="displayPage(${page - 1})" ${page === 1 ? 'disabled' : ''}>
+                            ⬅️ Précédent
+                        </button>
+                        <span style="font-size: 1.2em; color: #654321; margin: 0 20px;">
+                            Page ${page} / ${totalPages}
+                        </span>
+                        <button onclick="displayPage(${page + 1})" ${page === totalPages ? 'disabled' : ''}>
+                            Suivant ➡️
+                        </button>
+                    </div>
+                `;
+            }
+            
+            document.getElementById('content').innerHTML = html;
+        }
+        
+        // Charger les données au démarrage
+        loadData();
+        
+        // Recharger toutes les 30 secondes
+        setInterval(loadData, 30000);
+    </script>
+</body>
+</html>
