@@ -327,23 +327,32 @@
                 allData = [];
                 let totalRecettes = 0;
                 
-                // Parser les données - On commence à la ligne 4 (index 3)
-                // Ligne 1 (index 0) = Titre
-                // Ligne 2 (index 1) = Vide  
-                // Ligne 3 (index 2) = En-têtes
-                // Ligne 4+ (index 3+) = Données
+                // Parser les données
+                // Dans ton Sheet visuel :
+                // Ligne 1 = Titre "REGISTRE DES RECETTES"
+                // Ligne 2 = Vide
+                // Ligne 3 = En-têtes (Date, Description, etc.)
+                // Ligne 4+ = Données
                 
-                // MAIS il semble qu'il y ait 2 lignes avant les en-têtes, donc on démarre à index 3
-                let startIndex = 3;
+                // Mais l'API Google peut avoir un décalage
+                // On va détecter la première ligne avec des vraies données
                 
-                // Vérifier si la ligne 3 contient des données ou des en-têtes
-                if (rows[3] && rows[3].c) {
-                    const firstCell = rows[3].c[0];
-                    if (firstCell && firstCell.v && String(firstCell.v).includes('Date')) {
-                        // C'est une ligne d'en-tête, on commence à 4
-                        startIndex = 4;
+                let startIndex = 3; // Par défaut, on commence à l'index 3
+                
+                // Chercher la première ligne qui contient "Date" (les en-têtes)
+                for (let i = 0; i < Math.min(10, rows.length); i++) {
+                    if (rows[i] && rows[i].c && rows[i].c[0]) {
+                        const cellValue = String(rows[i].c[0].v || '');
+                        if (cellValue.includes('Date') && !cellValue.includes('Date(')) {
+                            // Trouvé les en-têtes, les données commencent à la ligne suivante
+                            startIndex = i + 1;
+                            console.log('En-têtes trouvés à la ligne', i, '- Données commencent à', startIndex);
+                            break;
+                        }
                     }
                 }
+                
+                console.log('Démarrage à l\'index:', startIndex);
                 
                 for (let i = startIndex; i < rows.length; i++) {
                     const cells = rows[i].c;
