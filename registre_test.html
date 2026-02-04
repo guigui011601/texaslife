@@ -273,9 +273,11 @@
             <h2>Registre des Recettes</h2>
         </div>
         
+
+        
         <div class="registre">
             <div class="registre-content">
-                <div class="registre-title"> LIVRE DE COMPTES 📖</div>
+                <div class="registre-title">📖 LIVRE DE COMPTES 📖</div>
                 
                 <div class="stats-bar">
                     <div class="stat">
@@ -293,7 +295,7 @@
                 </div>
                 
                 <div id="content">
-                    <div class="loading"> Chargement du registre...</div>
+                    <div class="loading">⏳ Chargement du registre...</div>
                 </div>
             </div>
         </div>
@@ -305,6 +307,10 @@
         // Copie juste la partie ABC123XYZ
         const SHEET_ID = '1zrqQ5iAxBM4x-wXYK4V7aiavcBylLdwai0M1rcAaX44';
         const SHEET_NAME = 'Recettes'; // Nom de l'onglet
+        
+        // ⚠️ LIGNE DE DÉPART : Change ce chiffre si les données ne commencent pas au bon endroit
+        // Essaie 3, 4, 5 ou 6 jusqu'à ce que ça affiche toutes tes lignes correctement
+        const START_ROW_INDEX = 3; // Commence à tester avec 3
         
         let currentPage = 1;
         const rowsPerPage = 20;
@@ -327,34 +333,11 @@
                 allData = [];
                 let totalRecettes = 0;
                 
-                // Parser les données
-                // Dans ton Sheet visuel :
-                // Ligne 1 = Titre "REGISTRE DES RECETTES"
-                // Ligne 2 = Vide
-                // Ligne 3 = En-têtes (Date, Description, etc.)
-                // Ligne 4+ = Données
+                // Parser les données en utilisant START_ROW_INDEX configuré en haut
+                console.log('Nombre total de lignes:', rows.length);
+                console.log('Démarrage à l\'index:', START_ROW_INDEX);
                 
-                // Mais l'API Google peut avoir un décalage
-                // On va détecter la première ligne avec des vraies données
-                
-                let startIndex = 3; // Par défaut, on commence à l'index 3
-                
-                // Chercher la première ligne qui contient "Date" (les en-têtes)
-                for (let i = 0; i < Math.min(10, rows.length); i++) {
-                    if (rows[i] && rows[i].c && rows[i].c[0]) {
-                        const cellValue = String(rows[i].c[0].v || '');
-                        if (cellValue.includes('Date') && !cellValue.includes('Date(')) {
-                            // Trouvé les en-têtes, les données commencent à la ligne suivante
-                            startIndex = i + 1;
-                            console.log('En-têtes trouvés à la ligne', i, '- Données commencent à', startIndex);
-                            break;
-                        }
-                    }
-                }
-                
-                console.log('Démarrage à l\'index:', startIndex);
-                
-                for (let i = startIndex; i < rows.length; i++) {
+                for (let i = START_ROW_INDEX; i < rows.length; i++) {
                     const cells = rows[i].c;
                     
                     // Ignorer les lignes vides
