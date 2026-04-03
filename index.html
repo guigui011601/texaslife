@@ -3,360 +3,127 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Texas Life RP — MAINTENANCE</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Rye&family=Special+Elite&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
-    <style>
-        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-        :root {
-            --paper: #f2e6d0;
-            --paper-dark: #e0cdb0;
-            --ink: #2c1a0e;
-            --ink-faded: #5c3d20;
-            --sepia: #8b5e3c;
-            --gold: #c9940a;
-            --gold-light: #e8b84b;
-            --rust: #8b2500;
-            --rust-light: #c43800;
-        }
-
-        html, body { height: 100%; }
-
-        body {
-            background: var(--ink);
-            font-family: 'Special Elite', cursive;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            overflow: hidden;
-            position: relative;
-        }
-
-        body::before {
-            content: '';
-            position: fixed;
-            inset: 0;
-            background:
-                radial-gradient(ellipse at 20% 50%, rgba(90,40,10,0.4) 0%, transparent 60%),
-                radial-gradient(ellipse at 80% 50%, rgba(60,20,5,0.5) 0%, transparent 60%),
-                repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.08) 3px, rgba(0,0,0,0.08) 4px);
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .dust { position: fixed; inset: 0; pointer-events: none; z-index: 1; }
-        .dust::before, .dust::after {
-            content: '';
-            position: absolute;
-            width: 2px; height: 2px;
-            border-radius: 50%;
-            background: rgba(200,160,80,0.3);
-            animation: float 8s ease-in-out infinite;
-        }
-        .dust::before { top: 20%; left: 15%; animation-delay: 0s; }
-        .dust::after  { top: 70%; right: 20%; animation-delay: 4s; }
-        @keyframes float {
-            0%, 100% { transform: translateY(0) translateX(0); opacity: 0.3; }
-            50%       { transform: translateY(-20px) translateX(10px); opacity: 0.7; }
-        }
-
-        .poster {
-            position: relative;
-            z-index: 2;
-            width: 90%;
-            max-width: 700px;
-            background: var(--paper);
-            border: 6px double var(--sepia);
-            outline: 2px solid var(--sepia);
-            outline-offset: 6px;
-            padding: 3rem 3.5rem;
-            text-align: center;
-            box-shadow: 0 0 0 10px var(--ink), 0 30px 80px rgba(0,0,0,0.8), inset 0 0 80px rgba(139,94,60,0.15);
-        }
-
-        .poster::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background:
-                radial-gradient(circle at 5% 5%, rgba(180,120,60,0.25) 0%, transparent 30%),
-                radial-gradient(circle at 95% 8%, rgba(160,100,40,0.2) 0%, transparent 25%),
-                radial-gradient(circle at 50% 95%, rgba(180,120,60,0.2) 0%, transparent 35%),
-                radial-gradient(circle at 10% 90%, rgba(140,90,30,0.15) 0%, transparent 25%),
-                radial-gradient(circle at 90% 85%, rgba(180,120,60,0.18) 0%, transparent 30%);
-            pointer-events: none;
-        }
-
-        .poster-inner { position: relative; z-index: 1; }
-
-        .corner { position: absolute; font-size: 1.4rem; color: var(--sepia); line-height: 1; opacity: 0.6; }
-        .corner-tl { top: 12px; left: 14px; }
-        .corner-tr { top: 12px; right: 14px; transform: scaleX(-1); }
-        .corner-bl { bottom: 12px; left: 14px; transform: scaleY(-1); }
-        .corner-br { bottom: 12px; right: 14px; transform: scale(-1,-1); }
-
-        .badge-top {
-            display: inline-block;
-            font-family: 'Rye', cursive;
-            font-size: 0.75rem;
-            letter-spacing: 0.35em;
-            color: var(--paper);
-            background: var(--sepia);
-            padding: 4px 20px;
-            margin-bottom: 1.4rem;
-            position: relative;
-        }
-        .badge-top::before, .badge-top::after { content: '⬥'; position: absolute; top: 50%; transform: translateY(-50%); color: var(--gold); font-size: 0.6rem; }
-        .badge-top::before { left: 6px; }
-        .badge-top::after  { right: 6px; }
-
-        .title-main {
-            font-family: 'Rye', cursive;
-            font-size: clamp(2.5rem, 6vw, 4.2rem);
-            color: var(--ink);
-            line-height: 1.05;
-            letter-spacing: 0.04em;
-            text-shadow: 3px 3px 0 rgba(0,0,0,0.12);
-            margin-bottom: 0.3rem;
-        }
-
-        .title-sub {
-            font-family: 'Rye', cursive;
-            font-size: clamp(1.1rem, 3vw, 1.8rem);
-            color: var(--rust);
-            letter-spacing: 0.12em;
-            margin-bottom: 1.6rem;
-        }
-
-        .divider { display: flex; align-items: center; gap: 12px; margin: 1.2rem 0; color: var(--sepia); }
-        .divider-line { flex: 1; height: 1px; background: linear-gradient(to right, transparent, var(--sepia), transparent); }
-        .divider-star { font-size: 1rem; color: var(--gold); }
-
-        .message-box {
-            border: 2px solid var(--sepia);
-            padding: 1.4rem 1.8rem;
-            margin: 1.4rem 0;
-            position: relative;
-            background: rgba(139,94,60,0.06);
-        }
-        .message-box::before { content: ''; position: absolute; inset: 3px; border: 1px solid rgba(139,94,60,0.3); pointer-events: none; }
-
-        .message-title { font-family: 'Rye', cursive; font-size: 1.05rem; color: var(--rust); margin-bottom: 0.8rem; letter-spacing: 0.06em; }
-        .message-text  { font-family: 'IM Fell English', serif; font-style: italic; font-size: 1.1rem; line-height: 1.75; color: var(--ink-faded); }
-
-        .star-container { margin: 1.6rem 0 1rem; }
-        .sheriff-star {
-            display: inline-block;
-            font-size: 3.5rem;
-            color: var(--gold);
-            text-shadow: 0 0 20px rgba(201,148,10,0.4), 2px 2px 0 rgba(0,0,0,0.2);
-            animation: pulse 3s ease-in-out infinite;
-            filter: drop-shadow(0 2px 6px rgba(201,148,10,0.3));
-        }
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50%       { transform: scale(1.05); opacity: 0.85; }
-        }
-
-        .countdown-label { font-family: 'Rye', cursive; font-size: 0.7rem; letter-spacing: 0.3em; color: var(--sepia); text-transform: uppercase; margin-bottom: 0.7rem; }
-
-        .countdown { display: flex; justify-content: center; gap: 1.5rem; margin: 0.5rem 0 1.6rem; flex-wrap: wrap; }
-        .count-block { text-align: center; min-width: 60px; }
-        .count-number {
-            font-family: 'Rye', cursive;
-            font-size: 2.2rem;
-            color: var(--ink);
-            line-height: 1;
-            display: block;
-            background: var(--paper-dark);
-            border: 2px solid var(--sepia);
-            padding: 8px 12px;
-            min-width: 64px;
-            text-shadow: 1px 1px 0 rgba(0,0,0,0.1);
-        }
-        .count-label { font-size: 0.6rem; letter-spacing: 0.2em; color: var(--sepia); text-transform: uppercase; margin-top: 5px; display: block; }
-
-        /* Message ouverture */
-        .open-msg {
-            display: none;
-            opacity: 0;
-            transition: opacity 1.5s ease;
-            margin: 0.5rem 0 1.4rem;
-        }
-        .open-msg-inner {
-            border: 3px double var(--gold);
-            padding: 1.2rem 1.8rem;
-            background: rgba(201,148,10,0.08);
-            position: relative;
-        }
-        .open-msg-inner::before { content: ''; position: absolute; inset: 4px; border: 1px solid rgba(201,148,10,0.3); pointer-events: none; }
-        .open-msg-title {
-            font-family: 'Rye', cursive;
-            font-size: 1.05rem;
-            color: var(--gold);
-            margin-bottom: 0.6rem;
-            letter-spacing: 0.06em;
-            animation: glow 2s ease-in-out infinite;
-        }
-        @keyframes glow {
-            0%, 100% { text-shadow: 0 0 8px rgba(201,148,10,0.4); }
-            50%       { text-shadow: 0 0 20px rgba(201,148,10,0.9), 0 0 40px rgba(201,148,10,0.4); }
-        }
-        .open-msg-text { font-family: 'IM Fell English', serif; font-style: italic; color: var(--ink-faded); font-size: 1rem; line-height: 1.6; }
-
-        .discord-btn {
-            display: inline-block;
-            font-family: 'Rye', cursive;
-            font-size: 0.85rem;
-            letter-spacing: 0.1em;
-            color: var(--paper);
-            background: var(--rust);
-            border: 3px solid var(--ink);
-            padding: 10px 28px;
-            text-decoration: none;
-            transition: all 0.2s ease;
-            margin-top: 0.5rem;
-            box-shadow: 4px 4px 0 var(--ink);
-        }
-        .discord-btn:hover  { background: var(--rust-light); transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--ink); }
-        .discord-btn:active { transform: translate(2px,2px); box-shadow: 2px 2px 0 var(--ink); }
-
-        .stamp { margin-top: 1.8rem; font-family: 'IM Fell English', serif; font-size: 0.75rem; color: var(--sepia); letter-spacing: 0.06em; opacity: 0.7; }
-
-        .torn-top, .torn-bottom { position: fixed; left: 0; right: 0; height: 30px; z-index: 10; pointer-events: none; }
-        .torn-top    { top: 0;    background: linear-gradient(to bottom, var(--ink) 0%, transparent 100%); }
-        .torn-bottom { bottom: 0; background: linear-gradient(to top,   var(--ink) 0%, transparent 100%); }
-
-        @media (max-width: 500px) {
-            .poster { padding: 2rem 1.5rem; }
-            .countdown { gap: 0.8rem; }
-            .count-number { font-size: 1.6rem; min-width: 50px; }
-        }
-    </style>
+    <title>Texas Life RP</title>
+    <link rel="stylesheet" href="western.css">
 </head>
 <body>
-
-<div class="dust"></div>
-<div class="torn-top"></div>
-<div class="torn-bottom"></div>
-
-<div class="poster">
-    <span class="corner corner-tl">✦</span>
-    <span class="corner corner-tr">✦</span>
-    <span class="corner corner-bl">✦</span>
-    <span class="corner corner-br">✦</span>
-
-    <div class="poster-inner">
-        <div class="badge-top">Texas Life RP — 1885</div>
-
-        <div class="title-main">MAINTENANCE</div>
-
-        <div class="divider">
-            <div class="divider-line"></div>
-            <span class="divider-star">★</span>
-            <div class="divider-line"></div>
+    <aside class="sidebar">
+        <div class="logo">
+            <img src="images/tested.png" alt="Texas Life RP">
         </div>
+        <nav>
+            <div class="nav-section">
+                <span class="nav-label">Navigation</span>
+                <a href="index.html" class="nav-link active"><span class="nav-icon">🏠</span> Accueil</a>
+                <a href="presentation.html" class="nav-link NAV_PRESENTATION"><span class="nav-icon">📜</span> Présentation</a>
+                <a href="Règlement.html" class="nav-link NAV_REGLEMENT"><span class="nav-icon">⚖️</span> Règlement</a>
+                <a href="Lore.html" class="nav-link NAV_LORE"><span class="nav-icon">🗺️</span> Lore</a>
+                <a href="Actualités.html" class="nav-link NAV_ACTU"><span class="nav-icon">📰</span> Actualités</a>
+                <a href="galerie.html" class="nav-link NAV_GALERIE"><span class="nav-icon">🖼️</span> Galerie</a>
+                <a href="Roles.html" class="nav-link NAV_ROLES"><span class="nav-icon">🔰</span> Rôles & Fonctions</a>
+            </div>
+            <div class="nav-divider"></div>
+            <div class="nav-section">
+                <span class="nav-label">Aide</span>
+                <a href="aide.html" class="nav-link NAV_AIDE"><span class="nav-icon">⌨️</span> Aide touche</a>
+            </div>
+        </nav>
+        <div class="sidebar-footer">Texas Life RP · Est. 1885</div>
+    </aside>
+<main class="main-content">
+    <div class="hero">
+        <h1>Texas Life RP</h1>
+        <p>Vivez une expérience immersive inédite dans l'Ouest sauvage de 1885. Chaque moment est une aventure unique, chaque décision forge votre légende.</p>
+        <a href="https://discord.com/invite/gmxZfz6S8R" class="btn-western" target="_blank">⚑ Rejoindre le Discord</a>
+    </div>
 
-        <div class="star-container">
-            <span class="sheriff-star">⭐</span>
-        </div>
+    <div class="content-wrap">
 
-        <div class="message-box">
-            <div class="message-title">⚠ Avis Officiel du Gouverneur</div>
-            <div class="message-text">
-                Le territoire est temporairement fermé aux voyageurs.<br>
-                Des travaux de grande envergure sont en cours pour préparer
-                l'avenir de notre grande nation.<br><br>
-                <strong>Rendez-vous lors de la réunion communautaire</strong><br>
-                pour la grande réouverture.
+        <div class="panel">
+            <div class="panel-header"><span class="panel-icon">📜</span><h2>À propos de Texas Life RP</h2></div>
+            <div class="panel-body prose">
+                <p>Texas Life RP est un serveur RedM plongeant les joueurs dans l'année 1885, au cœur de l'ouest sauvage. Nous proposons une expérience immersive où chaque comté offre ses propres défis et opportunités.</p>
+                <p>Dans le comté d'Ambarino, les tensions liées à la colonisation se mêlent à l'exploration de la faune indigène. New Hanover est marqué par des inégalités économiques et des conflits entre éleveurs, tandis que Lemoyne se distingue comme un centre culturel en proie à la corruption. Les aventuriers trouveront leur bonheur à West Elizabeth, et New Austin, zone chaotique, abrite une milice autoproclamée.</p>
             </div>
         </div>
 
-        <div class="divider">
-            <div class="divider-line"></div>
-            <span class="divider-star">★</span>
-            <div class="divider-line"></div>
-        </div>
-
-        <div class="countdown-label" id="countdown-label">— Retour dans —</div>
-        <div class="countdown" id="countdown">
-            <div class="count-block">
-                <span class="count-number" id="days">00</span>
-                <span class="count-label">Jours</span>
+        <div class="section-title">Ce qui nous distingue</div>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <img src="images/mine.jpg" alt="Caractéristiques">
+                <div class="feature-card-body">
+                    <h3>Caractéristiques uniques</h3>
+                    <p>Système économique dynamique, météo dynamique, personnalisation avancée des personnages.</p>
+                </div>
             </div>
-            <div class="count-block">
-                <span class="count-number" id="hours">00</span>
-                <span class="count-label">Heures</span>
+            <div class="feature-card">
+                <img src="images/val.jpg" alt="Événements">
+                <div class="feature-card-body">
+                    <h3>Événements réguliers</h3>
+                    <ul>
+                        <li>Concours de tir avec prix spéciaux</li>
+                        <li>Vol en ballon limité</li>
+                        <li>Chasse au trésor</li>
+                        <li>Fête de Noël avec concours</li>
+                    </ul>
+                </div>
             </div>
-            <div class="count-block">
-                <span class="count-number" id="minutes">00</span>
-                <span class="count-label">Minutes</span>
+            <div class="feature-card">
+                <img src="images/Red-Dead-Redemption.jpg" alt="Monde vivant">
+                <div class="feature-card-body">
+                    <h3>Un monde vivant</h3>
+                    <p>Événements dynamiques et scénarisés qui plongent les joueurs dans une véritable histoire évolutive.</p>
+                </div>
             </div>
-            <div class="count-block">
-                <span class="count-number" id="seconds">00</span>
-                <span class="count-label">Secondes</span>
-            </div>
-        </div>
-
-        <!-- Message affiché quand le timer atteint 0 -->
-        <div class="open-msg" id="open-msg">
-            <div class="open-msg-inner">
-                <div class="open-msg-title">★ Le territoire est désormais ouvert ! ★</div>
-                <div class="open-msg-text">
-                    La réouverture est imminente, pionniers.<br>
-                    Le Gouverneur prend la parole dans quelques instants…
+            <div class="feature-card">
+                <img src="images/On top of the world.jpg" alt="Rejoignez-nous">
+                <div class="feature-card-body">
+                    <h3>Rejoignez-nous</h3>
+                    <p>Plus qu'un serveur de jeu — une aventure où chaque décision compte. Inscrivez-vous aujourd'hui !</p>
                 </div>
             </div>
         </div>
 
-        <a href="https://discord.com/invite/gmxZfz6S8R" class="discord-btn" target="_blank">
-            ⚑ Rejoindre le Discord
-        </a>
-
-        <div class="stamp">
-            © 2026 Texas Life RP · Tous droits réservés · Établi en 1885
+        <div class="section-title">Questions fréquentes</div>
+        <div class="faq-grid">
+            <div class="faq-card">
+                <img src="images/pooint.png" alt="Rejoindre">
+                <h3>Comment rejoindre ?</h3>
+                <p>Rejoignez notre Discord et acceptez le règlement.</p>
+                <br><a href="https://discord.com/invite/gmxZfz6S8R" class="btn-western" target="_blank">Rejoindre</a>
+            </div>
+            <div class="faq-card">
+                <img src="images/pngegg.png" alt="Prérequis">
+                <h3>Prérequis techniques</h3>
+                <p>Serveur optimisé pour petites configurations, connexion stable nécessaire.</p>
+            </div>
+            <div class="faq-card">
+                <img src="images/point deux.png" alt="Support">
+                <h3>Signaler un problème</h3>
+                <p>Utilisez notre système de ticket Discord pour tout signalement in-game.</p>
+                <br><a href="https://discordapp.com/channels/1078316641194082354/1084194216558735531" class="btn-western" target="_blank">Aide</a>
+            </div>
         </div>
+
+        <div class="section-title">Actualités récentes</div>
+        <div class="panel">
+            <div class="panel-body prose">
+                <p>Notre équipe travaille d'arrache-pied pour améliorer l'expérience de jeu avec des mises à jour régulières : systèmes économiques, nouveaux scripts, mappings enrichis…</p>
+                <br><a href="Actualités.html" class="btn-western">📰 Voir toutes les actualités</a>
+            </div>
+        </div>
+
+        <div class="team-section">
+            <div class="section-title">L'équipe Texas Life</div>
+            <ul class="team-list">
+                <li><strong>Administrateurs</strong> — Supervisent le serveur et gèrent les mises à jour</li>
+                <li><strong>Modérateurs</strong> — Veillent au respect des règles et aident les joueurs</li>
+                <li><strong>Développeurs</strong> — Créent les scripts et fonctionnalités exclusives</li>
+            </ul>
+        </div>
+
     </div>
-</div>
-
-<script>
-    // Date cible : dimanche 5 avril 2026 à 16h10 heure de Paris (CEST = UTC+2)
-    const TARGET = new Date('2026-04-05T14:10:00Z');
-
-    function pad(n) { return String(n).padStart(2, '0'); }
-
-    function showOpen() {
-        document.getElementById('countdown-label').style.display = 'none';
-        document.getElementById('countdown').style.display = 'none';
-        const msg = document.getElementById('open-msg');
-        msg.style.display = 'block';
-        setTimeout(() => { msg.style.opacity = '1'; }, 50);
-    }
-
-    function tick() {
-        const diff = TARGET - new Date();
-
-        if (diff <= 0) {
-            showOpen();
-            return;
-        }
-
-        const d = Math.floor(diff / 86400000);
-        const h = Math.floor((diff % 86400000) / 3600000);
-        const m = Math.floor((diff % 3600000)  / 60000);
-        const s = Math.floor((diff % 60000)    / 1000);
-
-        document.getElementById('days').textContent    = pad(d);
-        document.getElementById('hours').textContent   = pad(h);
-        document.getElementById('minutes').textContent = pad(m);
-        document.getElementById('seconds').textContent = pad(s);
-    }
-
-    tick();
-    setInterval(tick, 1000);
-</script>
+    <footer class="site-footer">© 2026 Texas Life RP · Tous droits réservés · Établi en 1885</footer>
+</main>
 </body>
 </html>
