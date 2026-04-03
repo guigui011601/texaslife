@@ -24,7 +24,7 @@
 html, body { height: 100%; }
 
 body {
-    background: var(--wood);
+    background: #c8b490;
     font-family: 'Special Elite', cursive;
     color: var(--ink);
     display: flex;
@@ -136,23 +136,13 @@ body {
     margin-left: var(--sidebar-w);
     width: calc(100% - var(--sidebar-w));
     min-height: 100vh;
-    background: linear-gradient(135deg, #c8b090 0%, #d4c4a0 30%, #c0a878 100%);
+    background: #c8b490;
+    min-height: 100vh;
     position: relative;
     padding-bottom: 60px;
 }
 
-/* texture papier */
-.main-content::before {
-    content: '';
-    position: fixed;
-    top: 0; left: var(--sidebar-w); right: 0; bottom: 0;
-    background:
-        radial-gradient(circle at 10% 20%, rgba(139,94,60,0.12) 0%, transparent 40%),
-        radial-gradient(circle at 90% 80%, rgba(101,67,33,0.1) 0%, transparent 40%),
-        repeating-linear-gradient(0deg, transparent, transparent 28px, rgba(139,94,60,0.06) 28px, rgba(139,94,60,0.06) 29px);
-    pointer-events: none;
-    z-index: 0;
-}
+/* texture papier inline dans main-content */
 
 .main-content > * { position: relative; z-index: 1; }
 
