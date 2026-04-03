@@ -7,11 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Rye&family=Special+Elite&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
     <style>
-        *, *::before, *::after {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
             --paper: #f2e6d0;
@@ -25,9 +21,7 @@
             --rust-light: #c43800;
         }
 
-        html, body {
-            height: 100%;
-        }
+        html, body { height: 100%; }
 
         body {
             background: var(--ink);
@@ -41,61 +35,34 @@
             position: relative;
         }
 
-        /* Background texture */
         body::before {
             content: '';
             position: fixed;
             inset: 0;
             background:
-                radial-gradient(ellipse at 20% 50%, rgba(90, 40, 10, 0.4) 0%, transparent 60%),
-                radial-gradient(ellipse at 80% 50%, rgba(60, 20, 5, 0.5) 0%, transparent 60%),
-                repeating-linear-gradient(
-                    0deg,
-                    transparent,
-                    transparent 3px,
-                    rgba(0,0,0,0.08) 3px,
-                    rgba(0,0,0,0.08) 4px
-                );
+                radial-gradient(ellipse at 20% 50%, rgba(90,40,10,0.4) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 50%, rgba(60,20,5,0.5) 0%, transparent 60%),
+                repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.08) 3px, rgba(0,0,0,0.08) 4px);
             pointer-events: none;
             z-index: 0;
         }
 
-        /* Dust particles */
-        .dust {
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: 1;
-        }
-
+        .dust { position: fixed; inset: 0; pointer-events: none; z-index: 1; }
         .dust::before, .dust::after {
             content: '';
             position: absolute;
-            width: 2px;
-            height: 2px;
+            width: 2px; height: 2px;
             border-radius: 50%;
-            background: rgba(200, 160, 80, 0.3);
+            background: rgba(200,160,80,0.3);
             animation: float 8s ease-in-out infinite;
         }
-
-        .dust::before {
-            top: 20%;
-            left: 15%;
-            animation-delay: 0s;
-        }
-
-        .dust::after {
-            top: 70%;
-            right: 20%;
-            animation-delay: 4s;
-        }
-
+        .dust::before { top: 20%; left: 15%; animation-delay: 0s; }
+        .dust::after  { top: 70%; right: 20%; animation-delay: 4s; }
         @keyframes float {
-            0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0.3; }
-            50% { transform: translateY(-20px) translateX(10px); opacity: 0.7; }
+            0%, 100% { transform: translateY(0) translateX(0); opacity: 0.3; }
+            50%       { transform: translateY(-20px) translateX(10px); opacity: 0.7; }
         }
 
-        /* Main wanted poster */
         .poster {
             position: relative;
             z-index: 2;
@@ -107,13 +74,9 @@
             outline-offset: 6px;
             padding: 3rem 3.5rem;
             text-align: center;
-            box-shadow:
-                0 0 0 10px var(--ink),
-                0 30px 80px rgba(0,0,0,0.8),
-                inset 0 0 80px rgba(139,94,60,0.15);
+            box-shadow: 0 0 0 10px var(--ink), 0 30px 80px rgba(0,0,0,0.8), inset 0 0 80px rgba(139,94,60,0.15);
         }
 
-        /* Paper aging */
         .poster::before {
             content: '';
             position: absolute;
@@ -127,25 +90,14 @@
             pointer-events: none;
         }
 
-        .poster-inner {
-            position: relative;
-            z-index: 1;
-        }
+        .poster-inner { position: relative; z-index: 1; }
 
-        /* Corner ornaments */
-        .corner {
-            position: absolute;
-            font-size: 1.4rem;
-            color: var(--sepia);
-            line-height: 1;
-            opacity: 0.6;
-        }
+        .corner { position: absolute; font-size: 1.4rem; color: var(--sepia); line-height: 1; opacity: 0.6; }
         .corner-tl { top: 12px; left: 14px; }
         .corner-tr { top: 12px; right: 14px; transform: scaleX(-1); }
         .corner-bl { bottom: 12px; left: 14px; transform: scaleY(-1); }
         .corner-br { bottom: 12px; right: 14px; transform: scale(-1,-1); }
 
-        /* Header */
         .badge-top {
             display: inline-block;
             font-family: 'Rye', cursive;
@@ -155,22 +107,12 @@
             background: var(--sepia);
             padding: 4px 20px;
             margin-bottom: 1.4rem;
-            text-transform: uppercase;
             position: relative;
         }
-
-        .badge-top::before, .badge-top::after {
-            content: '⬥';
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--gold);
-            font-size: 0.6rem;
-        }
+        .badge-top::before, .badge-top::after { content: '⬥'; position: absolute; top: 50%; transform: translateY(-50%); color: var(--gold); font-size: 0.6rem; }
         .badge-top::before { left: 6px; }
-        .badge-top::after { right: 6px; }
+        .badge-top::after  { right: 6px; }
 
-        /* Title */
         .title-main {
             font-family: 'Rye', cursive;
             font-size: clamp(2.5rem, 6vw, 4.2rem);
@@ -189,25 +131,10 @@
             margin-bottom: 1.6rem;
         }
 
-        /* Divider */
-        .divider {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin: 1.2rem 0;
-            color: var(--sepia);
-        }
-        .divider-line {
-            flex: 1;
-            height: 1px;
-            background: linear-gradient(to right, transparent, var(--sepia), transparent);
-        }
-        .divider-star {
-            font-size: 1rem;
-            color: var(--gold);
-        }
+        .divider { display: flex; align-items: center; gap: 12px; margin: 1.2rem 0; color: var(--sepia); }
+        .divider-line { flex: 1; height: 1px; background: linear-gradient(to right, transparent, var(--sepia), transparent); }
+        .divider-star { font-size: 1rem; color: var(--gold); }
 
-        /* Main message */
         .message-box {
             border: 2px solid var(--sepia);
             padding: 1.4rem 1.8rem;
@@ -215,75 +142,29 @@
             position: relative;
             background: rgba(139,94,60,0.06);
         }
+        .message-box::before { content: ''; position: absolute; inset: 3px; border: 1px solid rgba(139,94,60,0.3); pointer-events: none; }
 
-        .message-box::before {
-            content: '';
-            position: absolute;
-            inset: 3px;
-            border: 1px solid rgba(139,94,60,0.3);
-            pointer-events: none;
-        }
+        .message-title { font-family: 'Rye', cursive; font-size: 1.05rem; color: var(--rust); margin-bottom: 0.8rem; letter-spacing: 0.06em; }
+        .message-text  { font-family: 'IM Fell English', serif; font-style: italic; font-size: 1.1rem; line-height: 1.75; color: var(--ink-faded); }
 
-        .message-title {
-            font-family: 'Rye', cursive;
-            font-size: 1.05rem;
-            color: var(--rust);
-            margin-bottom: 0.8rem;
-            letter-spacing: 0.06em;
-        }
-
-        .message-text {
-            font-family: 'IM Fell English', serif;
-            font-style: italic;
-            font-size: 1.1rem;
-            line-height: 1.75;
-            color: var(--ink-faded);
-        }
-
-        /* Sheriff star */
-        .star-container {
-            margin: 1.6rem 0 1rem;
-        }
-
+        .star-container { margin: 1.6rem 0 1rem; }
         .sheriff-star {
             display: inline-block;
             font-size: 3.5rem;
             color: var(--gold);
-            text-shadow:
-                0 0 20px rgba(201,148,10,0.4),
-                2px 2px 0 rgba(0,0,0,0.2);
+            text-shadow: 0 0 20px rgba(201,148,10,0.4), 2px 2px 0 rgba(0,0,0,0.2);
             animation: pulse 3s ease-in-out infinite;
             filter: drop-shadow(0 2px 6px rgba(201,148,10,0.3));
         }
-
         @keyframes pulse {
             0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.05); opacity: 0.85; }
+            50%       { transform: scale(1.05); opacity: 0.85; }
         }
 
-        /* Countdown */
-        .countdown-label {
-            font-family: 'Rye', cursive;
-            font-size: 0.7rem;
-            letter-spacing: 0.3em;
-            color: var(--sepia);
-            text-transform: uppercase;
-            margin-bottom: 0.7rem;
-        }
+        .countdown-label { font-family: 'Rye', cursive; font-size: 0.7rem; letter-spacing: 0.3em; color: var(--sepia); text-transform: uppercase; margin-bottom: 0.7rem; }
 
-        .countdown {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            margin: 0.5rem 0 1.6rem;
-            flex-wrap: wrap;
-        }
-
-        .count-block {
-            text-align: center;
-            min-width: 60px;
-        }
-
+        .countdown { display: flex; justify-content: center; gap: 1.5rem; margin: 0.5rem 0 1.6rem; flex-wrap: wrap; }
+        .count-block { text-align: center; min-width: 60px; }
         .count-number {
             font-family: 'Rye', cursive;
             font-size: 2.2rem;
@@ -296,17 +177,36 @@
             min-width: 64px;
             text-shadow: 1px 1px 0 rgba(0,0,0,0.1);
         }
+        .count-label { font-size: 0.6rem; letter-spacing: 0.2em; color: var(--sepia); text-transform: uppercase; margin-top: 5px; display: block; }
 
-        .count-label {
-            font-size: 0.6rem;
-            letter-spacing: 0.2em;
-            color: var(--sepia);
-            text-transform: uppercase;
-            margin-top: 5px;
-            display: block;
+        /* Message ouverture */
+        .open-msg {
+            display: none;
+            opacity: 0;
+            transition: opacity 1.5s ease;
+            margin: 0.5rem 0 1.4rem;
         }
+        .open-msg-inner {
+            border: 3px double var(--gold);
+            padding: 1.2rem 1.8rem;
+            background: rgba(201,148,10,0.08);
+            position: relative;
+        }
+        .open-msg-inner::before { content: ''; position: absolute; inset: 4px; border: 1px solid rgba(201,148,10,0.3); pointer-events: none; }
+        .open-msg-title {
+            font-family: 'Rye', cursive;
+            font-size: 1.05rem;
+            color: var(--gold);
+            margin-bottom: 0.6rem;
+            letter-spacing: 0.06em;
+            animation: glow 2s ease-in-out infinite;
+        }
+        @keyframes glow {
+            0%, 100% { text-shadow: 0 0 8px rgba(201,148,10,0.4); }
+            50%       { text-shadow: 0 0 20px rgba(201,148,10,0.9), 0 0 40px rgba(201,148,10,0.4); }
+        }
+        .open-msg-text { font-family: 'IM Fell English', serif; font-style: italic; color: var(--ink-faded); font-size: 1rem; line-height: 1.6; }
 
-        /* Discord button */
         .discord-btn {
             display: inline-block;
             font-family: 'Rye', cursive;
@@ -317,44 +217,18 @@
             border: 3px solid var(--ink);
             padding: 10px 28px;
             text-decoration: none;
-            position: relative;
             transition: all 0.2s ease;
             margin-top: 0.5rem;
             box-shadow: 4px 4px 0 var(--ink);
         }
+        .discord-btn:hover  { background: var(--rust-light); transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--ink); }
+        .discord-btn:active { transform: translate(2px,2px); box-shadow: 2px 2px 0 var(--ink); }
 
-        .discord-btn:hover {
-            background: var(--rust-light);
-            transform: translate(-2px, -2px);
-            box-shadow: 6px 6px 0 var(--ink);
-        }
+        .stamp { margin-top: 1.8rem; font-family: 'IM Fell English', serif; font-size: 0.75rem; color: var(--sepia); letter-spacing: 0.06em; opacity: 0.7; }
 
-        .discord-btn:active {
-            transform: translate(2px, 2px);
-            box-shadow: 2px 2px 0 var(--ink);
-        }
-
-        /* Footer stamp */
-        .stamp {
-            margin-top: 1.8rem;
-            font-family: 'IM Fell English', serif;
-            font-size: 0.75rem;
-            color: var(--sepia);
-            letter-spacing: 0.06em;
-            opacity: 0.7;
-        }
-
-        /* Torn edge effect top/bottom */
-        .torn-top, .torn-bottom {
-            position: fixed;
-            left: 0;
-            right: 0;
-            height: 30px;
-            z-index: 10;
-            pointer-events: none;
-        }
-        .torn-top { top: 0; background: linear-gradient(to bottom, var(--ink) 0%, transparent 100%); }
-        .torn-bottom { bottom: 0; background: linear-gradient(to top, var(--ink) 0%, transparent 100%); }
+        .torn-top, .torn-bottom { position: fixed; left: 0; right: 0; height: 30px; z-index: 10; pointer-events: none; }
+        .torn-top    { top: 0;    background: linear-gradient(to bottom, var(--ink) 0%, transparent 100%); }
+        .torn-bottom { bottom: 0; background: linear-gradient(to top,   var(--ink) 0%, transparent 100%); }
 
         @media (max-width: 500px) {
             .poster { padding: 2rem 1.5rem; }
@@ -408,8 +282,8 @@
             <div class="divider-line"></div>
         </div>
 
-        <div class="countdown-label">— Retour dans —</div>
-        <div class="countdown">
+        <div class="countdown-label" id="countdown-label">— Retour dans —</div>
+        <div class="countdown" id="countdown">
             <div class="count-block">
                 <span class="count-number" id="days">00</span>
                 <span class="count-label">Jours</span>
@@ -428,6 +302,17 @@
             </div>
         </div>
 
+        <!-- Message affiché quand le timer atteint 0 -->
+        <div class="open-msg" id="open-msg">
+            <div class="open-msg-inner">
+                <div class="open-msg-title">★ Le territoire est désormais ouvert ! ★</div>
+                <div class="open-msg-text">
+                    La réouverture est imminente, pionniers.<br>
+                    Le Gouverneur prend la parole dans quelques instants…
+                </div>
+            </div>
+        </div>
+
         <a href="https://discord.com/invite/gmxZfz6S8R" class="discord-btn" target="_blank">
             ⚑ Rejoindre le Discord
         </a>
@@ -439,23 +324,24 @@
 </div>
 
 <script>
-    // ==============================================================
-    // CONFIGURE ICI : date cible de réouverture (dimanche 06/04/2026)
-    // Format: new Date('YYYY-MM-DDTHH:MM:SS')
-    // ==============================================================
-    const TARGET = new Date('2026-04-05T14:10:00Z'); // 16h10 heure de Paris (CEST UTC+2)
+    // Date cible : dimanche 5 avril 2026 à 16h10 heure de Paris (CEST = UTC+2)
+    const TARGET = new Date('2026-04-05T14:10:00Z');
 
     function pad(n) { return String(n).padStart(2, '0'); }
 
+    function showOpen() {
+        document.getElementById('countdown-label').style.display = 'none';
+        document.getElementById('countdown').style.display = 'none';
+        const msg = document.getElementById('open-msg');
+        msg.style.display = 'block';
+        setTimeout(() => { msg.style.opacity = '1'; }, 50);
+    }
+
     function tick() {
-        const now  = new Date();
-        const diff = TARGET - now;
+        const diff = TARGET - new Date();
 
         if (diff <= 0) {
-            document.getElementById('days').textContent    = '00';
-            document.getElementById('hours').textContent   = '00';
-            document.getElementById('minutes').textContent = '00';
-            document.getElementById('seconds').textContent = '00';
+            showOpen();
             return;
         }
 
